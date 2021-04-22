@@ -15,5 +15,5 @@ Run the project
 ---------------------------------
 
 ``` python3
-python3 main.py
+python3 main.py 
 ```
