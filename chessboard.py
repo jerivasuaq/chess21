@@ -16,8 +16,8 @@ class ChessBoard():
             [None, None,None,None,None, None,None,None],
             [None, None,None,None,None, None,None,None],
             [None, None,None,None,None, None,None,None],
-            [Pawn(6,0), Pawn(6,1), Pawn(6,2), Pawn(6,0), Pawn(6,1), Pawn(6,2), Pawn(6,0), Pawn(6,1)],
-            [Rook(7,0), Knight(7,1), Bishop(7,2), King(7,3), Queen(7,4), Bishop(7,5), Knight(7,6), Rook(7,7)],
+            [Pawn(6,0,2), Pawn(6,1,2), Pawn(6,2,2), Pawn(6,0,2), Pawn(6,1,2), Pawn(6,2,2), Pawn(6,0,2), Pawn(6,1,2)],
+            [Rook(7,0,2), Knight(7,1,2), Bishop(7,2,2), King(7,3,2), Queen(7,4,2), Bishop(7,5,2), Knight(7,6,2), Rook(7,7,2)],
         ]
 
     def draw(self):
