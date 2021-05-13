@@ -6,7 +6,7 @@ class Piece():
         self.char = ' '
 
     def draw(self):
-        print(self.char, '')
+        print(self.char, end='')
 
     def info(self):
         print('row:', self.row, 'col:', self.col)
