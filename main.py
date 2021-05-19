@@ -5,5 +5,8 @@ from rook import Rook
 
 print('Chess game')
 
-board = ChessBoard('chessboard1')
-board.draw()
+chessBoard = ChessBoard('chessboard1')
+chessBoard.draw()
+
+# valid = chessBoard.board[1][1].move(3, 1, chessBoard.board)
+# print(valid)  # must be true
