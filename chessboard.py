@@ -10,8 +10,8 @@ class ChessBoard():
     def __init__(self, name):
         self.name = name
         self.board = [
-            [Rook(0,0), Knight(0,1), Bishop(0,2), King(0,3), Queen(0,4), Bishop(0,5), Knight(0,6), Rook(0,7)],
-            [Pawn(1,0), Pawn(1,1), Pawn(1,2), Pawn(1,3), Pawn(1,4), Pawn(1,5), Pawn(1,6), Pawn(1,7)],
+            [Rook(0,0,1), Knight(0,1,1), Bishop(0,2,1), King(0,3), Queen(0,4,1), Bishop(0,5,1), Knight(0,6,1), Rook(0,7,1)],
+            [Pawn(1,0,1), Pawn(1,1,1), Pawn(1,2,1), Pawn(1,3,1), Pawn(1,4,1), Pawn(1,5,1), Pawn(1,6,1), Pawn(1,7,1)],
             [None, None,None,None,None, None,None,None],
             [None, None,None,None,None, None,None,None],
             [None, None,None,None,None, None,None,None],
@@ -26,9 +26,20 @@ class ChessBoard():
             for col in range(8):
                 p = self.board[row][col]
                 if p:
+                    print(' ', end='')
                     p.draw()
+                    print(' |', end='')
                 else:
-                    print(' ', end= '')
-
+                    print('████' if (row+col)%2 else '    ', end= '')
+            print()
+            for col in range(8):
+                p = self.board[row][col]
+                if p:
+                    print('___|', end='')
+                else:
+                    print('████' if (row+col)%2 else '    ', end= '')
             print()
 
+if __name__=='__main__':
+    chessBoard = ChessBoard('chessboard1')
+    chessBoard.draw()
