@@ -1,13 +1,6 @@
 import pytest
-from rook import Rook
-from pawn import Pawn
-
-@pytest.fixture
-def rook_board(empty_board):
-    b = empty_board
-    r = Rook(0,0,1)
-    b.board[0][0] = r
-    return b, r
+from chess.rook import Rook
+from chess.pawn import Pawn
 
 def test_valid_move_horizontal(rook_board):
     b, r = rook_board

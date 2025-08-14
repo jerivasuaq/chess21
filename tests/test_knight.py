@@ -1,21 +1,12 @@
 import pytest
-
-
 from chess.knight import Knight
 from chess.pawn import Pawn
-
-@pytest.fixture
-def knight_board(empty_board):
-    b = empty_board
-    k = Knight(4,4,1)
-    b.board[4][4] = k
-    return b, k
 
 def test_valid_moves(knight_board):
     b, k = knight_board
     for (r,c) in [(6,5),(6,3),(2,5),(2,3),(5,6),(5,2),(3,6),(3,2)]:
-        b2 = b.__class__('tmp')
-        # manually empty
+        from chess.chessboard import ChessBoard
+        b2 = ChessBoard('tmp')
         for rr in range(8):
             for cc in range(8):
                 b2.board[rr][cc] = None

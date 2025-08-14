@@ -1,14 +1,6 @@
 import pytest
-
 from chess.bishop import Bishop
 from chess.pawn import Pawn
-
-@pytest.fixture
-def bishop_board(empty_board):
-    b = empty_board
-    bish = Bishop(3,3,1)
-    b.board[3][3] = bish
-    return b, bish
 
 def test_valid_move_diagonal(bishop_board):
     b, bish = bishop_board
@@ -16,7 +8,7 @@ def test_valid_move_diagonal(bishop_board):
     assert b.board[0][0] is bish
 
 
-def test_blocked_path(bishop_board, empty_board):
+def test_blocked_path(bishop_board):
     b, bish = bishop_board
     b.board[2][2] = Pawn(2,2,1)
     assert bish.move(0,0,b) is False

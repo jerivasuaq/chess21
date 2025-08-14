@@ -4,14 +4,6 @@ from chess.queen import Queen
 from chess.pawn import Pawn
 
 
-@pytest.fixture
-def queen_board(empty_board):
-    b = empty_board
-    q = Queen(4, 4, 1)
-    b.board[4][4] = q
-    return b, q
-
-
 def test_valid_move_diagonal(queen_board):
     b, q = queen_board
     assert q.move(1, 1, b) is True
