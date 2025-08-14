@@ -9,16 +9,33 @@ from rook import Rook
 class ChessBoard():
     def __init__(self, name):
         self.name = name
-        self.board = [
-            [Rook(0,0,1), Knight(0,1,1), Bishop(0,2,1), King(0,3), Queen(0,4,1), Bishop(0,5,1), Knight(0,6,1), Rook(0,7,1)],
-            [Pawn(1,0,1), Pawn(1,1,1), Pawn(1,2,1), Pawn(1,3,1), Pawn(1,4,1), Pawn(1,5,1), Pawn(1,6,1), Pawn(1,7,1)],
-            [None, None,None,None,None, None,None,None],
-            [None, None,None,None,None, None,None,None],
-            [None, None,None,None,None, None,None,None],
-            [None, None,None,None,None, None,None,None],
-            [Pawn(6,0,2), Pawn(6,1,2), Pawn(6,2,2), Pawn(6,0,2), Pawn(6,1,2), Pawn(6,2,2), Pawn(6,0,2), Pawn(6,1,2)],
-            [Rook(7,0,2), Knight(7,1,2), Bishop(7,2,2), King(7,3,2), Queen(7,4,2), Bishop(7,5,2), Knight(7,6,2), Rook(7,7,2)],
-        ]
+        # Initialize empty board
+        self.board = [[None for _ in range(8)] for _ in range(8)]
+
+        # Setup pieces
+        def place_piece(piece_class, row, col, team):
+            self.board[row][col] = piece_class(row, col, team)
+
+        # Place main pieces for a team
+        def setup_back_row(row, team):
+            piece_order = [Rook, Knight, Bishop, Queen if row == 0 else King, 
+                          King if row == 0 else Queen, Bishop, Knight, Rook]
+            for col, piece_class in enumerate(piece_order):
+                if piece_class in (King, Queen):
+                    self.board[row][col] = piece_class(row, col, team)
+                else:
+                    self.board[row][col] = piece_class(row, col, team)
+
+        # Place pawns
+        def setup_pawns(row, team):
+            for col in range(8):
+                self.board[row][col] = Pawn(row, col, team)
+
+        # Setup the board with all pieces
+        setup_back_row(0, 1)  # Team 1 back row
+        setup_pawns(1, 1)     # Team 1 pawns
+        setup_pawns(6, 2)     # Team 2 pawns
+        setup_back_row(7, 2)  # Team 2 back row
 
     def draw(self):
         print('Chessboard: ', self.name)

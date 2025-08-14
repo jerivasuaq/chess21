@@ -1,47 +1,47 @@
 from piece import Piece
 
+
 class Bishop(Piece):
     def __init__(self, row, col, player=1):
         super().__init__(row, col, player)
-        self.char = 'B'
+        self.char = "♝" if player == 1 else "♗"
 
     def move(self, row, col, Board):
-        if (row > 7 or row < 0 or col > 7 or col < 0):
-            print("Movimiento fuera de tablero")
-            return
-        if (self.row == row or self.col == col):
-            print("El alfil ya se encuentra en esta posición")
-            return
-        m = (row - self.row)/(col - self.col)
-        if(abs(m) != 1):
-            print("No es movimiento diagonal")
-            return
-        
-        iRow = 1 if row < self.row else -1
-        iCol = 1 if col < self.col else -1
+        # Validate bounds
+        if not (0 <= row < 8 and 0 <= col < 8):
+            print("Move out of board bounds")
+            return False
+        dr = row - self.row
+        dc = col - self.col
+        # Same square
+        if dr == 0 and dc == 0:
+            print("Bishop is already on that square")
+            return False
+        # Must be diagonal: |dr| == |dc|
+        if abs(dr) != abs(dc):
+            print("Not a diagonal move")
+            return False
 
-        conti = 0
-        for i in range(row,self.row,iRow):
-            conti += 1
-            contj = 0
-            for j in range(col,self.col,iCol):
-                contj += 1
-                if conti == contj:
-                    p = Board.board[i][j]
-                    if p:
-                        if p.player == self.player:
-                            print("Ficha aliada en el camino, movimiento fallido")
-                            return
-                        else:
-                            if p.col != col:
-                               print("Ficha enemiga en el camino, movimiento fallido")
-                               return 
-    
+        step_r = 1 if dr > 0 else -1
+        step_c = 1 if dc > 0 else -1
+        r = self.row + step_r
+        c = self.col + step_c
+        # Check path (exclude destination)
+        while r != row:
+            p = Board.board[r][c]
+            if p:
+                print("Piece blocking the path, move failed")
+                return False
+            r += step_r
+            c += step_c
+        # Check destination
+        dest = Board.board[row][col]
+        if dest and dest.player == self.player:
+            print("Friendly piece on destination, move failed")
+            return False
 
+        # Move (capture if enemy piece present)
         Board.board[self.row][self.col] = None
-        super().move(row,col)
+        super().move(row, col)
         Board.board[row][col] = self
-        
-        
-
-        
+        return True
