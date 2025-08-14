@@ -58,3 +58,15 @@ class Pawn(Piece):
         print("Invalid pawn move")
         return False
 
+    def big_art(self):
+        # Place emoji at the top line
+        ch = self.char
+        art = [
+            f"     ",
+            f"  _  ",
+            f" ({ch}) ",
+            f" /_\\ ",
+            f" === "
+        ]
+        return [l for l in art]
+

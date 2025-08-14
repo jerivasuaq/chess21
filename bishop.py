@@ -45,3 +45,14 @@ class Bishop(Piece):
         super().move(row, col)
         Board.board[row][col] = self
         return True
+
+    def big_art(self):
+        ch = self.char
+        art = [
+            " /\\ ",
+            "( B)",
+            f" ({ch})",
+            " /_\\",
+            " === "
+        ]
+        return art

@@ -42,3 +42,14 @@ class Queen(Piece):
         Board.board[row][col] = self
         return True
 
+    def big_art(self):
+        ch = self.char
+        art = [
+            " /W\\ ",
+            "( Q )",
+            f" ({ch}) ",
+            "  \\_/ ",
+            "  === "
+        ]
+        return art
+

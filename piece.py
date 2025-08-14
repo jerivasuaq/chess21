@@ -14,3 +14,6 @@ class Piece():
     def move(self, row, col):
         self.row = row
         self.col = col
+
+    def big_art(self):
+        return []

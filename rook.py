@@ -42,3 +42,14 @@ class Rook(Piece):
         Board.board[row][col] = self
         return True
 
+    def big_art(self):
+        ch = self.char
+        art = [
+            "     ",
+            " |_| ",
+            f" ({ch}) ",
+            " |_| ",
+            " === "
+        ]
+        return art
+
