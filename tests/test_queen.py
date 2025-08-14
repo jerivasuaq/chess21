@@ -1,43 +1,47 @@
-import unittest
-from queen import Queen
-from pawn import Pawn
-from test_utils import empty_board
+import pytest
 
-class TestQueen(unittest.TestCase):
-    def setUp(self):
-        self.board = empty_board()
-        self.queen = Queen(4, 4, 1)
-        self.board.board[4][4] = self.queen
+from chess.queen import Queen
+from chess.pawn import Pawn
 
-    def test_valid_move_diagonal(self):
-        ok = self.queen.move(1, 1, self.board)
-        self.assertTrue(ok)
-        self.assertIs(self.board.board[1][1], self.queen)
 
-    def test_valid_move_straight(self):
-        self.queen.move(4, 4, self.board)  # ensure position
-        ok = self.queen.move(4, 7, self.board)
-        self.assertTrue(ok)
-        self.assertIs(self.board.board[4][7], self.queen)
+@pytest.fixture
+def queen_board(empty_board):
+    b = empty_board
+    q = Queen(4, 4, 1)
+    b.board[4][4] = q
+    return b, q
 
-    def test_blocked_path(self):
-        self.board.board[4][6] = Pawn(4, 6, 1)
-        ok = self.queen.move(4, 7, self.board)
-        self.assertFalse(ok)
 
-    def test_capture_enemy(self):
-        self.board.board[1][1] = Pawn(1, 1, 2)
-        ok = self.queen.move(1, 1, self.board)
-        self.assertTrue(ok)
+def test_valid_move_diagonal(queen_board):
+    b, q = queen_board
+    assert q.move(1, 1, b) is True
+    assert b.board[1][1] is q
 
-    def test_cannot_capture_ally(self):
-        self.board.board[1][1] = Pawn(1, 1, 1)
-        ok = self.queen.move(1, 1, self.board)
-        self.assertFalse(ok)
 
-    def test_invalid_move(self):
-        ok = self.queen.move(6, 5, self.board)  # not straight or diagonal from (4,4)
-        self.assertFalse(ok)
+def test_valid_move_straight(queen_board):
+    b, q = queen_board
+    assert q.move(4, 7, b) is True
+    assert b.board[4][7] is q
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_blocked_path(queen_board):
+    b, q = queen_board
+    b.board[4][6] = Pawn(4, 6, 1)
+    assert q.move(4, 7, b) is False
+
+
+def test_capture_enemy(queen_board):
+    b, q = queen_board
+    b.board[1][1] = Pawn(1, 1, 2)
+    assert q.move(1, 1, b) is True
+
+
+def test_cannot_capture_ally(queen_board):
+    b, q = queen_board
+    b.board[1][1] = Pawn(1, 1, 1)
+    assert q.move(1, 1, b) is False
+
+
+def test_invalid_move(queen_board):
+    b, q = queen_board
+    assert q.move(6, 5, b) is False
